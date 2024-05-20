@@ -1,0 +1,51 @@
+section .data
+    mens1 db 'Multiplicación de 2 números enteros', 0xA
+    len1 equ $ - mens1
+    mens2 db 'La multiplicacion de los dos enteros sera de 2x2', 0xA
+    len2 equ $ - mens2
+    
+    mens3 db 'El resultante es: ', 0xA
+    len3 equ $ - mens3
+    
+    n1 db 2
+    n2 db 2
+    
+section .bss
+    sol resw 1
+
+section .text
+    global _start
+
+_start:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mens1
+    mov edx, len1
+    int 0x80
+
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mens2
+    mov edx, len2
+    int 0x80
+
+    mov al, [n1]
+    mov bl, [n2]
+    mul bl
+    add al, 48
+    mov [sol], al
+    
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, mens3
+    mov edx, len3
+    int 0x80
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, sol
+    mov edx, 6
+    int 0x80
+
+    mov eax, 1
+    xor ebx, ebx
+    int 0x80
